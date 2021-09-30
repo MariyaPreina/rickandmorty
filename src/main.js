@@ -3,4 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-createApp(App).use(store).use(router).mount('#app')
+import AppIcon from './components/AppIcon'
+
+import './style.css'
+
+const app = createApp(App)
+
+app.use(store)
+app.use(router)
+
+app.component('app-icon', AppIcon)
+
+app.mount('#app')

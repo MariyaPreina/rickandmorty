@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    --main-color: #5CAD4A;
+    --main-color-opacity: rgba(92, 173, 74, 0.43);
+    --bacground-color: #2c2c2c;
+    --bacground-color-light: #454545;
+    --text-color: #e2e2e2;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #fff;
+    background-color: var(--bacground-color);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+}
+
+button:focus {
+    outline: none;
+}
+
+textarea:focus, input:focus {
+    outline: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+}
+
+/*=Characters page=*/
+.characters {
+    width: 100%;
+    display: flex;
+    margin-top: 50px;
+}
+
+.characters__filters {
+    width: 25%;
+}
+
+.characters__cards {
+    width: 75%;
+    border: 2px solid var(--main-color-opacity);
+}
+
+/*=Character card=*/
+.card {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+
+}
+
+.card:not(:last-child) {
+    border-bottom: 2px solid var(--main-color-opacity);
+}
+
+.card__avatar {
+    width: 160px;
+    height: 160px;
+}
+
+.card__content {
+    width: calc(100% - 160px);
+
+}
+
+.info__icon {
+    width: 20px;
+    height: 20px;
+    fill: var(--main-color);
+}
+
+/*=Avatar=*/
+.avatar {
+    position: relative;
+    display: block;
+}
+
+.avatar__inner {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.avatar__img {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center top;
+    background-size: cover;
+    border-radius: 6px;
+}
+
+/*=Character page=*/
+.character {
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    border: 1px solid var(--main-color-opacity);
+    padding: 15px;
+}
+
+.character__left {
+    width: 300px;
+}
+
+.character__right {
+    width: calc(100% - 300px);
+    padding: 0 32px;
+}
+
+.character__avatar {
+    width: 300px;
+    height: 350px;
+}
+
+.character__name {
+    font-family: inherit;
+    font-size: 40px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.character__heading {
+    font-family: inherit;
+    font-size: 25px;
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.character__info-item {
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--text-color);
+}
+
+.character__info-item span{
+    font-weight: 600;
+}
+
+.character__info-item:not(:last-child) {
+    margin-bottom: 10px;
+}
