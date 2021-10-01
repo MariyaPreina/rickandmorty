@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import CharactersPage from '../views/CharactersPage'
 import CharacterPage from '../views/CharacterPage'
+import EpisodePage from '../views/EpisodePage'
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
     name: 'characters',
     component: CharactersPage,
     meta: {
-      title: `${process.env.VUE_APP_ROOT_TITLE} | Characters`
+      title: `${process.env.VUE_APP_TITLE} | Characters`
     }
   },
   {
@@ -21,21 +22,30 @@ const routes = [
     props: true,
     component: CharacterPage,
     meta: {
-      title: `${process.env.VUE_APP_ROOT_TITLE} | Character`
+      title: `${process.env.VUE_APP_TITLE} | Character`
+    }
+  },
+  {
+    path: '/episode/:id',
+    name: 'episode',
+    props: true,
+    component: EpisodePage,
+    meta: {
+      title: `${process.env.VUE_APP_TITLE} | Episode`
     }
   }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-  /* scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0 }
-    }
-  } */
+  history: createWebHistory(),
+  routes,
+  scrollBehavior (to, from, savedPosition) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(savedPosition || { top: 0 })
+      }, 100)
+    })
+  }
 })
 
 export default router

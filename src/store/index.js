@@ -3,9 +3,10 @@ import axios from 'axios'
 
 const store = createStore({
   state: () => ({
-    selectedCharacter: {},
     status: '',
-    characters: []
+    characters: [],
+    selectedCharacter: {},
+    selectedEpisode: {}
   }),
   mutations: {
     request (state) {
@@ -18,9 +19,13 @@ const store = createStore({
       state.status = 'success'
       state.characters = characters
     },
-    loadSelectedSuccess (state, character) {
+    loadSelectedCharacterSuccess (state, character) {
       state.status = 'success'
       state.selectedCharacter = character
+    },
+    loadSelectedEpisodeSuccess (state, episode) {
+      state.status = 'success'
+      state.selectedEpisode = episode
     }
   },
   getters: {
@@ -32,6 +37,9 @@ const store = createStore({
     },
     character (state) {
       return state.selectedCharacter
+    },
+    episode (state) {
+      return state.selectedEpisode
     }
   },
   actions: {
@@ -50,9 +58,21 @@ const store = createStore({
       try {
         commit('request')
         const characterData = await axios.get(`${process.env.VUE_APP_BASE_URL}/character/${payload.id}`)
-        const user = characterData.data
-        console.log(user)
-        commit('loadSelectedSuccess', user)
+        const character = characterData.data
+        console.log(character)
+        commit('loadSelectedCharacterSuccess', character)
+      } catch (e) {
+        console.log(e)
+        commit('error')
+      }
+    },
+    async getSelectedEpisode ({ commit }, payload) {
+      try {
+        commit('request')
+        const episodeData = await axios.get(`${process.env.VUE_APP_BASE_URL}/episode/${payload.id}`)
+        const episode = episodeData.data
+        console.log(episode)
+        commit('loadSelectedEpisodeSuccess', episode)
       } catch (e) {
         console.log(e)
         commit('error')

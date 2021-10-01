@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="character" v-if="status === 'success'">
+    <main class="character" v-if="status === 'success'">
       <div class="character__left">
         <div class="character__avatar avatar">
           <div class="avatar__inner">
@@ -18,7 +18,7 @@
           <p class="character__info-item"><span>Location:</span> {{ location }}</p>
         </div>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
       })
     }
   },
-  mounted () {
+  created () {
     this.getCharacterData()
   }
 }

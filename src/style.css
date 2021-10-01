@@ -6,6 +6,7 @@
     --bacground-color: #2c2c2c;
     --bacground-color-light: #454545;
     --text-color: #e2e2e2;
+    --text-color-dark: #b9b9b9;
 }
 
 *,
@@ -17,7 +18,7 @@
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    color: #fff;
+    color: var(--text-color);
     background-color: var(--bacground-color);
 }
 
@@ -33,6 +34,10 @@ textarea:focus, input:focus {
     outline: none;
 }
 
+#app {
+    padding: 50px 0;
+}
+
 .container {
     width: 100%;
     max-width: 1200px;
@@ -45,7 +50,6 @@ textarea:focus, input:focus {
 .characters {
     width: 100%;
     display: flex;
-    margin-top: 50px;
 }
 
 .characters__filters {
@@ -76,7 +80,11 @@ textarea:focus, input:focus {
 
 .card__content {
     width: calc(100% - 160px);
+}
 
+.card__episode-item:not(:last-child)::after {
+    content: ',';
+    margin-right: 4px;
 }
 
 .info__icon {
@@ -86,18 +94,18 @@ textarea:focus, input:focus {
 }
 
 /*=Avatar=*/
-.avatar {
+.avatar, .character-img {
     position: relative;
     display: block;
 }
 
-.avatar__inner {
+.avatar__inner, .character-img__inner {
     width: 100%;
     height: 100%;
     overflow: hidden;
 }
 
-.avatar__img {
+.avatar__img, .character-img__img {
     position: absolute;
     top: 0;
     width: 100%;
@@ -110,7 +118,6 @@ textarea:focus, input:focus {
 /*=Character page=*/
 .character {
     width: 100%;
-    margin-top: 50px;
     display: flex;
     border: 1px solid var(--main-color-opacity);
     padding: 15px;
@@ -157,4 +164,41 @@ textarea:focus, input:focus {
 
 .character__info-item:not(:last-child) {
     margin-bottom: 10px;
+}
+
+/*=Episode Page=*/
+.episode__info {
+    margin-bottom: 30px;
+}
+
+.episode__name {
+    font-family: inherit;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.episode__date {
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-color-dark);
+}
+
+.episode__date span{
+    font-weight: 400;
+}
+
+.episode__photo-box {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 20vw;
+    grid-gap: 15px;
+}
+
+.character-img {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
