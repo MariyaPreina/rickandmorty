@@ -26,10 +26,10 @@ export default {
   },
   computed: {
     status () {
-      return this.$store.getters.status
+      return this.$store.state.status
     },
     episodeData () {
-      return this.$store.getters.episode
+      return this.$store.state.selectedEpisode
     },
     name () {
       return this.episodeData.name

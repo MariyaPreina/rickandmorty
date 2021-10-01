@@ -4,7 +4,8 @@
     --main-color: #5CAD4A;
     --main-color-opacity: rgba(92, 173, 74, 0.43);
     --bacground-color: #2c2c2c;
-    --bacground-color-light: #454545;
+    --bacground-color-dark: #1e1e1e;
+    --border-color: #454545;
     --text-color: #e2e2e2;
     --text-color-dark: #b9b9b9;
 }
@@ -46,6 +47,10 @@ textarea:focus, input:focus {
     padding: 0 20px;
 }
 
+.observer {
+    height: 1px;
+}
+
 /*=Characters page=*/
 .characters {
     width: 100%;
@@ -60,6 +65,52 @@ textarea:focus, input:focus {
     width: 75%;
     border: 2px solid var(--main-color-opacity);
 }
+
+/*filters*/
+.characters__filters-heading {
+    font-family: inherit;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.filters {
+    width: 100%;
+    padding-right: 15px;
+}
+
+.filters__input, .filters__select {
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text-color-dark);
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    padding: 3px 8px;
+    border: 1px solid var(--bacground-color-dark);
+    background-color: var(--bacground-color-dark);
+    margin-bottom: 15px;
+}
+
+.filters__apply {
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--bacground-color);
+    border: 1px solid var(--main-color);
+    background-color: var(--main-color);
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all .2s linear;
+}
+
+.filters__apply:hover {
+    background-color: var(--bacground-color);
+    color: var(--main-color);
+}
+
 
 /*=Character card=*/
 .card {

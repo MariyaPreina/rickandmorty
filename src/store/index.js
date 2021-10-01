@@ -6,7 +6,10 @@ const store = createStore({
     status: '',
     characters: [],
     selectedCharacter: {},
-    selectedEpisode: {}
+    selectedEpisode: {},
+    nameFilter: '',
+    statusFilter: '',
+    numberOfPages: ''
   }),
   mutations: {
     request (state) {
@@ -15,9 +18,13 @@ const store = createStore({
     error (state) {
       state.status = 'error'
     },
-    loadCharactersSuccess (state, characters) {
+    loadCharactersSuccess (state, data) {
       state.status = 'success'
-      state.characters = characters
+      state.characters = [...state.characters, ...data.characters]
+      state.numberOfPages = data.pages
+    },
+    clearCharactersData (state) {
+      state.characters = []
     },
     loadSelectedCharacterSuccess (state, character) {
       state.status = 'success'
@@ -26,29 +33,24 @@ const store = createStore({
     loadSelectedEpisodeSuccess (state, episode) {
       state.status = 'success'
       state.selectedEpisode = episode
-    }
-  },
-  getters: {
-    status (state) {
-      return state.status
     },
-    characters (state) {
-      return state.characters
+    updateNameFilter (state, payload) {
+      state.nameFilter = payload
     },
-    character (state) {
-      return state.selectedCharacter
-    },
-    episode (state) {
-      return state.selectedEpisode
+    updateStatusFilter (state, payload) {
+      state.statusFilter = payload
     }
   },
   actions: {
-    async getListOfCharacters ({ commit }) {
+    async getListOfCharacters ({ commit }, payload) {
       try {
         commit('request')
-        const res = await axios.get(`${process.env.VUE_APP_BASE_URL}/character`)
+        const res = await axios.get(`${process.env.VUE_APP_BASE_URL}/character/?${payload?.page}${payload?.filter}`)
         const characters = res.data.results
-        commit('loadCharactersSuccess', characters)
+        const pages = res.data.info.pages
+        console.log(characters)
+        console.log(pages)
+        commit('loadCharactersSuccess', { characters, pages })
       } catch (e) {
         console.log(e)
         commit('error')

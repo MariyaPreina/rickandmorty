@@ -27,10 +27,10 @@ export default {
   props: ['id'],
   computed: {
     characterData () {
-      return this.$store.getters.character
+      return this.$store.state.selectedCharacter
     },
     status () {
-      return this.$store.getters.status
+      return this.$store.state.status
     },
     name () {
       return this.characterData.name
