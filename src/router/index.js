@@ -1,7 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import CharactersPage from '../views/CharactersPage'
 import CharacterPage from '../views/CharacterPage'
 import EpisodePage from '../views/EpisodePage'
+import { publicPath } from '../../vue.config'
 
 const routes = [
   {
@@ -37,7 +38,8 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
+  base: publicPath,
   routes,
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
