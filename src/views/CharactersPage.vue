@@ -26,6 +26,7 @@
           :image="character.image"
           :episodes="character.episode.slice(0, 5)"
         ></character-card>
+        <p class="characters__no-result" v-if="characters.length === 0 && status === 'error'">No results</p>
       </div>
     </main>
   </div>
@@ -42,11 +43,6 @@ export default {
     CharacterCard,
     AppObserver
   },
-  data () {
-    return {
-      page: 1
-    }
-  },
   computed: {
     status () {
       return this.$store.state.status
@@ -62,6 +58,9 @@ export default {
     },
     numberOfPages () {
       return this.$store.state.numberOfPages
+    },
+    currentPage () {
+      return this.$store.state.currentPage
     }
   },
   methods: {
@@ -85,26 +84,28 @@ export default {
       }
       return params.join('&')
     },
-    applyFilters () {
-      this.$store.commit('clearCharactersData')
+    loadCharacters () {
       this.$store.dispatch('getListOfCharacters', {
         filter: this.filterQuery(),
-        page: ''
+        page: `page=${this.currentPage}&`
       })
     },
+    applyFilters () {
+      this.$store.commit('clearCharactersData')
+      this.$store.commit('clearCurrentPage')
+      this.loadCharacters()
+    },
     onIntersect () {
-      console.log('intersect')
-      if (this.page <= this.numberOfPages) {
-        this.$store.dispatch('getListOfCharacters', {
-          filter: this.filterQuery(),
-          page: `page=${this.page++}&`
-        })
+      if (this.currentPage < this.numberOfPages) {
+        this.$store.commit('currentPage')
+        this.loadCharacters()
       }
     }
   },
   mounted () {
-    console.log('mounted')
-    this.$store.dispatch('getListOfCharacters')
+    if (this.characters.length === 0) {
+      this.loadCharacters()
+    }
   }
 }
 </script>

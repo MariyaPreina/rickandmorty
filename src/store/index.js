@@ -1,15 +1,28 @@
 import { createStore } from 'vuex'
-import axios from 'axios'
+import apiClient from '../api/apiClient'
+import VuexPersistence from 'vuex-persist'
+
+const vuexLocal = new VuexPersistence({
+  storage: window.sessionStorage,
+  reducer: (state) => ({
+    characters: state.characters,
+    nameFilter: state.nameFilter,
+    statusFilter: state.statusFilter,
+    currentPage: state.currentPage
+  })
+})
 
 const store = createStore({
+  plugins: [vuexLocal.plugin],
   state: () => ({
     status: '',
-    characters: [],
+    characters: window.sessionStorage.getItem('characters') || [],
     selectedCharacter: {},
     selectedEpisode: {},
-    nameFilter: '',
-    statusFilter: '',
-    numberOfPages: ''
+    nameFilter: window.sessionStorage.getItem('nameFilter') || '',
+    statusFilter: window.sessionStorage.getItem('statusFilter') || '',
+    numberOfPages: '',
+    currentPage: window.sessionStorage.getItem('currentPage') || 1
   }),
   mutations: {
     request (state) {
@@ -39,46 +52,30 @@ const store = createStore({
     },
     updateStatusFilter (state, payload) {
       state.statusFilter = payload
+    },
+    currentPage (state) {
+      state.currentPage++
+    },
+    clearCurrentPage (state) {
+      state.currentPage = 1
     }
   },
   actions: {
     async getListOfCharacters ({ commit }, payload) {
-      try {
-        commit('request')
-        const res = await axios.get(`${process.env.VUE_APP_BASE_URL}/character/?${payload?.page}${payload?.filter}`)
-        const characters = res.data.results
-        const pages = res.data.info.pages
-        console.log(characters)
-        console.log(pages)
-        commit('loadCharactersSuccess', { characters, pages })
-      } catch (e) {
-        console.log(e)
-        commit('error')
-      }
+      const charactersData = await apiClient.get(`/character/?${payload?.page}${payload?.filter}`)
+      const characters = charactersData.data.results
+      const pages = charactersData.data.info.pages
+      commit('loadCharactersSuccess', { characters, pages })
     },
     async getSelectedCharacter ({ commit }, payload) {
-      try {
-        commit('request')
-        const characterData = await axios.get(`${process.env.VUE_APP_BASE_URL}/character/${payload.id}`)
-        const character = characterData.data
-        console.log(character)
-        commit('loadSelectedCharacterSuccess', character)
-      } catch (e) {
-        console.log(e)
-        commit('error')
-      }
+      const characterData = await apiClient.get(`/character/${payload.id}`)
+      const character = characterData.data
+      commit('loadSelectedCharacterSuccess', character)
     },
     async getSelectedEpisode ({ commit }, payload) {
-      try {
-        commit('request')
-        const episodeData = await axios.get(`${process.env.VUE_APP_BASE_URL}/episode/${payload.id}`)
-        const episode = episodeData.data
-        console.log(episode)
-        commit('loadSelectedEpisodeSuccess', episode)
-      } catch (e) {
-        console.log(e)
-        commit('error')
-      }
+      const episodeData = await apiClient.get(`/episode/${payload.id}`)
+      const episode = episodeData.data
+      commit('loadSelectedEpisodeSuccess', episode)
     }
   }
 })

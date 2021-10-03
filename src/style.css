@@ -5,9 +5,10 @@
     --main-color-opacity: rgba(92, 173, 74, 0.43);
     --bacground-color: #2c2c2c;
     --bacground-color-dark: #1e1e1e;
-    --border-color: #454545;
+    --bacground-color-light: #424242;
+    --pseudo-element-color: #757474;
     --text-color: #e2e2e2;
-    --text-color-dark: #b9b9b9;
+    --text-color-dark: #b0b0b0;
 }
 
 *,
@@ -34,6 +35,9 @@ button:focus {
 textarea:focus, input:focus {
     outline: none;
 }
+a {
+    text-decoration: none;
+}
 
 #app {
     padding: 50px 0;
@@ -51,7 +55,8 @@ textarea:focus, input:focus {
     height: 1px;
 }
 
-/*=Characters page=*/
+
+/*===Characters page===*/
 .characters {
     width: 100%;
     display: flex;
@@ -64,6 +69,16 @@ textarea:focus, input:focus {
 .characters__cards {
     width: 75%;
     border: 2px solid var(--main-color-opacity);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.characters__no-result {
+    font-family: inherit;
+    font-size: 25px;
+    color: var(--text-color-dark);
 }
 
 /*filters*/
@@ -112,12 +127,11 @@ textarea:focus, input:focus {
 }
 
 
-/*=Character card=*/
+/*===Character card===*/
 .card {
     width: 100%;
     padding: 16px;
     display: flex;
-
 }
 
 .card:not(:last-child) {
@@ -131,20 +145,110 @@ textarea:focus, input:focus {
 
 .card__content {
     width: calc(100% - 160px);
+    margin-left: 20px;
+}
+
+.card__info {
+    margin-bottom: 8px;
+}
+
+.card__info-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 15px;
+}
+
+.card__info-name {
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.card__info-img {
+    margin-left: 6px;
+    position: relative;
+}
+
+.card__info-img::after {
+    font-family: inherit;
+    font-size: 12px;
+    position: absolute;
+    color: var(--pseudo-element-color);
+    bottom: 12px;
+    margin-left: 6px;
+    white-space: nowrap;
+    display: none;
+}
+
+.card__info-img:hover::after {
+    display: inline-block;
+}
+
+.card__info-img--alive::after {
+    content: 'Status: alive';
+}
+
+.card__info-img--dead::after {
+    content: 'Status: dead';
+}
+
+.card__info-img--unknown::after {
+    content: 'Status: unknown';
+}
+
+.card__info-icon {
+    width: 18px;
+    height: 18px;
+    fill: var(--main-color);
+}
+
+.card__info-species {
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--text-color-dark);
+}
+
+.card__info-species span {
+    font-weight: 700;
+    margin-right: 6px;
+}
+
+.card__episodes {
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    color: var(--text-color-dark);
+}
+
+.card__episodes-title {
+    font-family: inherit;
+    font-weight: 700;
+    margin-right: 6px;
 }
 
 .card__episode-item:not(:last-child)::after {
     content: ',';
-    margin-right: 4px;
+    color: var(--text-color-dark);
+    margin-right: 5px;
+
+}
+.card__episode-item {
+    font-family: inherit;
+    color: var(--text-color-dark);
+    cursor: pointer;
+    transition: color .2s linear;
 }
 
-.info__icon {
-    width: 20px;
-    height: 20px;
-    fill: var(--main-color);
+.card__episode-item:hover {
+    color: var(--main-color);
 }
 
-/*=Avatar=*/
+
+/*Avatar*/
 .avatar, .character-img {
     position: relative;
     display: block;
@@ -166,11 +270,12 @@ textarea:focus, input:focus {
     border-radius: 6px;
 }
 
-/*=Character page=*/
+
+/*==Character page==*/
 .character {
+    border: 1px solid var(--main-color-opacity);
     width: 100%;
     display: flex;
-    border: 1px solid var(--main-color-opacity);
     padding: 15px;
 }
 
@@ -185,13 +290,13 @@ textarea:focus, input:focus {
 
 .character__avatar {
     width: 300px;
-    height: 350px;
+    height: 300px;
 }
 
 .character__name {
     font-family: inherit;
     font-size: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     color: #fff;
 }
 
@@ -200,24 +305,27 @@ textarea:focus, input:focus {
     font-size: 25px;
     color: var(--text-color);
     margin-bottom: 10px;
+    border-bottom: 2px solid var(--bacground-color-light);
 }
 
 .character__info-item {
     font-family: inherit;
     font-size: 18px;
     font-weight: 400;
-    color: var(--text-color);
+    color: var(--text-color-dark);
 }
 
 .character__info-item span{
     font-weight: 600;
+    color: var(--text-color);
 }
 
 .character__info-item:not(:last-child) {
     margin-bottom: 10px;
 }
 
-/*=Episode Page=*/
+
+/*==Episode Page==*/
 .episode__info {
     margin-bottom: 30px;
 }
@@ -252,4 +360,78 @@ textarea:focus, input:focus {
     width: 100%;
     height: 100%;
     cursor: pointer;
+}
+
+/*== MEDIA ==*/
+@media screen and (max-width: 768px) {
+    /*=Characters page=*/
+    .characters {
+       flex-direction: column;
+    }
+
+    .characters__filters {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .filters {
+        padding-right: 0;
+    }
+
+    .characters__cards {
+        width: 100%;
+    }
+
+    /*=Character card=*/
+    .card__avatar {
+        width: 130px;
+        height: 130px;
+    }
+
+    .card__content {
+        width: calc(100% - 130px);
+        margin-left: 20px;
+    }
+
+    .card__info-name {
+        font-size: 18px;
+    }
+
+    .card__info-species,
+    .card__episode-item {
+        font-size: 12px;
+    }
+
+    /*=Character page=*/
+    .character {
+        flex-direction: column;
+    }
+
+    .character__left {
+        width: 100%;
+    }
+
+    .character__right {
+        width: 100%;
+        padding: 0;
+    }
+
+    .character__avatar {
+        width: 100%;
+        max-width: 300px;
+        max-height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+    }
+
+    .character__name {
+        text-align: center;
+    }
+
+    /*=Episode page=*/
+    .episode__photo-box {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 40vw;
+    }
 }
